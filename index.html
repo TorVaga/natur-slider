@@ -34,49 +34,18 @@
           </div>
 
           <div id="comparison" class="comparison-mount"></div>
-
-          <div class="viewer-actions" aria-label="Bildevalg">
-            <button type="button" id="swapButton">Bytt bilder</button>
-            <button type="button" id="resetButton">50 / 50</button>
-            <output id="positionOutput" aria-label="Synlig del av venstre bilde">50%</output>
-          </div>
         </div>
+      </section>
 
-        <aside class="analysis-panel" aria-label="Elevfunn">
-          <div class="panel-heading">
-            <p class="eyebrow">Elevfunn</p>
-            <h2>Hva har endret seg?</h2>
-          </div>
-
-          <p class="task-text">
-            Se etter spor av bygging, veier, hogst, vannendringer og annen bruk av landskapet.
-          </p>
-
-          <div class="tag-grid" aria-label="Typer menneskeskapte endringer">
-            <button type="button" data-tag="Bygg">Bygg</button>
-            <button type="button" data-tag="Vei">Vei</button>
-            <button type="button" data-tag="Hogst">Hogst</button>
-            <button type="button" data-tag="Jordbruk">Jordbruk</button>
-            <button type="button" data-tag="Vann">Vann</button>
-            <button type="button" data-tag="Spor">Spor</button>
-          </div>
-
-          <label class="note-field" for="observationInput">
-            <span>Observasjon</span>
-            <textarea
-              id="observationInput"
-              rows="5"
-              placeholder="Skriv hva du ser i bildet..."
-            ></textarea>
-          </label>
-
-          <div class="note-actions">
-            <button type="button" id="addFindingButton">Legg til funn</button>
-            <button type="button" id="clearFindingsButton">Tøm funn</button>
-          </div>
-
-          <div id="findingList" class="finding-list" aria-live="polite"></div>
-        </aside>
+      <section class="answer-panel" aria-label="Svar">
+        <label class="answer-field" for="answerInput">
+          <span>Hva har endret seg i landskapet?</span>
+          <textarea
+            id="answerInput"
+            rows="4"
+            placeholder="Skriv svaret ditt her..."
+          ></textarea>
+        </label>
       </section>
     </main>
 

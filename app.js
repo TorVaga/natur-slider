@@ -4,13 +4,10 @@ const comparison = createPhotoChangeSlider({
   before: imageLibrary[0],
   after: imageLibrary[1] ?? imageLibrary[0],
   initialPosition: 50,
-  onChange: (position) => {
-    document.querySelector("#positionOutput").value = `${Math.round(position)}%`;
-  },
 });
 
 setupImagePicker(imageLibrary, comparison);
-setupFindings();
+setupAnswerBox();
 
 function getImageLibrary() {
   const fallback = [
@@ -67,8 +64,6 @@ function setupImagePicker(images, slider) {
   const afterSelect = document.querySelector("#afterSelect");
   const beforeLabel = document.querySelector("#beforeYearLabel");
   const afterLabel = document.querySelector("#afterYearLabel");
-  const swapButton = document.querySelector("#swapButton");
-  const resetButton = document.querySelector("#resetButton");
 
   fillSelect(beforeSelect, images);
   fillSelect(afterSelect, images);
@@ -77,17 +72,6 @@ function setupImagePicker(images, slider) {
 
   beforeSelect.addEventListener("change", updateComparison);
   afterSelect.addEventListener("change", updateComparison);
-
-  swapButton.addEventListener("click", () => {
-    const beforeIndex = beforeSelect.selectedIndex;
-    beforeSelect.selectedIndex = afterSelect.selectedIndex;
-    afterSelect.selectedIndex = beforeIndex;
-    updateComparison();
-  });
-
-  resetButton.addEventListener("click", () => {
-    slider.setPosition(50);
-  });
 
   updateComparison();
 
@@ -212,110 +196,16 @@ function applyImage(img, image) {
   img.draggable = false;
 }
 
-function setupFindings() {
-  const storageKey = "natur-slider-funn";
-  const selectedTags = new Set();
-  const tagButtons = [...document.querySelectorAll("[data-tag]")];
-  const note = document.querySelector("#observationInput");
-  const addButton = document.querySelector("#addFindingButton");
-  const clearButton = document.querySelector("#clearFindingsButton");
-  const list = document.querySelector("#findingList");
-  let findings = loadFindings();
+function setupAnswerBox() {
+  const storageKey = "natur-slider-svar";
+  const answer = document.querySelector("#answerInput");
 
-  tagButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const tag = button.dataset.tag;
-
-      if (selectedTags.has(tag)) {
-        selectedTags.delete(tag);
-        button.classList.remove("is-selected");
-      } else {
-        selectedTags.add(tag);
-        button.classList.add("is-selected");
-      }
-    });
-  });
-
-  addButton.addEventListener("click", () => {
-    const text = note.value.trim();
-
-    if (!text && selectedTags.size === 0) {
-      note.focus();
-      return;
-    }
-
-    findings = [
-      {
-        tags: [...selectedTags],
-        text,
-      },
-      ...findings,
-    ];
-
-    note.value = "";
-    selectedTags.clear();
-    tagButtons.forEach((button) => button.classList.remove("is-selected"));
-    saveFindings();
-    renderFindings();
-  });
-
-  clearButton.addEventListener("click", () => {
-    findings = [];
-    saveFindings();
-    renderFindings();
-  });
-
-  renderFindings();
-
-  function renderFindings() {
-    list.replaceChildren();
-
-    if (findings.length === 0) {
-      const empty = document.createElement("p");
-      empty.className = "finding-empty";
-      empty.textContent = "Ingen funn er lagt til ennå.";
-      list.append(empty);
-      return;
-    }
-
-    findings.forEach((finding) => {
-      const item = document.createElement("article");
-      item.className = "finding";
-
-      if (finding.tags.length > 0) {
-        const tags = document.createElement("div");
-        tags.className = "finding__tags";
-
-        finding.tags.forEach((tag) => {
-          const chip = document.createElement("span");
-          chip.className = "finding__tag";
-          chip.textContent = tag;
-          tags.append(chip);
-        });
-
-        item.append(tags);
-      }
-
-      if (finding.text) {
-        const text = document.createElement("p");
-        text.className = "finding__note";
-        text.textContent = finding.text;
-        item.append(text);
-      }
-
-      list.append(item);
-    });
+  if (!answer) {
+    return;
   }
 
-  function loadFindings() {
-    try {
-      return JSON.parse(localStorage.getItem(storageKey)) ?? [];
-    } catch {
-      return [];
-    }
-  }
-
-  function saveFindings() {
-    localStorage.setItem(storageKey, JSON.stringify(findings));
-  }
+  answer.value = localStorage.getItem(storageKey) ?? "";
+  answer.addEventListener("input", () => {
+    localStorage.setItem(storageKey, answer.value);
+  });
 }
