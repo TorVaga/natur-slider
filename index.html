@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Naturendringer over 10 år</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Fotoanalyse</p>
+          <h1>Naturendringer over 10 år</h1>
+        </div>
+        <div class="time-label" aria-label="Tidsrom">
+          <span id="beforeYearLabel">For 10 år siden</span>
+          <span class="time-line" aria-hidden="true"></span>
+          <span id="afterYearLabel">I dag</span>
+        </div>
+      </header>
+
+      <section class="workspace" aria-label="Sammenligning av naturfoto">
+        <div class="viewer-panel">
+          <div class="year-picker" aria-label="Velg år som skal sammenlignes">
+            <label for="beforeSelect">
+              <span>Venstre bilde</span>
+              <select id="beforeSelect"></select>
+            </label>
+            <label for="afterSelect">
+              <span>Høyre bilde</span>
+              <select id="afterSelect"></select>
+            </label>
+          </div>
+
+          <div id="comparison" class="comparison-mount"></div>
+
+          <div class="viewer-actions" aria-label="Bildevalg">
+            <button type="button" id="swapButton">Bytt bilder</button>
+            <button type="button" id="resetButton">50 / 50</button>
+            <output id="positionOutput" aria-label="Synlig del av venstre bilde">50%</output>
+          </div>
+        </div>
+
+        <aside class="analysis-panel" aria-label="Elevfunn">
+          <div class="panel-heading">
+            <p class="eyebrow">Elevfunn</p>
+            <h2>Hva har endret seg?</h2>
+          </div>
+
+          <p class="task-text">
+            Se etter spor av bygging, veier, hogst, vannendringer og annen bruk av landskapet.
+          </p>
+
+          <div class="tag-grid" aria-label="Typer menneskeskapte endringer">
+            <button type="button" data-tag="Bygg">Bygg</button>
+            <button type="button" data-tag="Vei">Vei</button>
+            <button type="button" data-tag="Hogst">Hogst</button>
+            <button type="button" data-tag="Jordbruk">Jordbruk</button>
+            <button type="button" data-tag="Vann">Vann</button>
+            <button type="button" data-tag="Spor">Spor</button>
+          </div>
+
+          <label class="note-field" for="observationInput">
+            <span>Observasjon</span>
+            <textarea
+              id="observationInput"
+              rows="5"
+              placeholder="Skriv hva du ser i bildet..."
+            ></textarea>
+          </label>
+
+          <div class="note-actions">
+            <button type="button" id="addFindingButton">Legg til funn</button>
+            <button type="button" id="clearFindingsButton">Tøm funn</button>
+          </div>
+
+          <div id="findingList" class="finding-list" aria-live="polite"></div>
+        </aside>
+      </section>
+    </main>
+
+    <script defer src="./bilder.js"></script>
+    <script defer src="./app.js"></script>
+  </body>
+</html>
